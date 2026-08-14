@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Endüstri Yatırım Gündemi — İhale ve Yatırım Bülteni</title>
+<meta name="description" content="Türkiye ve dünyadan sanayi yatırımları, altyapı ihaleleri ve inşaat sözleşmeleri gündemi." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0d1524;          /* deep navy base */
+    --ink-2:#111c30;        /* panel */
+    --ink-3:#182742;        /* raised panel */
+    --line:#25344f;         /* hairlines */
+    --amber:#efb04a;        /* primary accent */
+    --amber-dim:#c98f34;
+    --text:#e9edf5;
+    --muted:#8b99b3;
+    --muted-2:#5f6d87;
+    /* category hues (kept muted so navy dominates) */
+    --c-yol:#efb04a;
+    --c-su:#54a7ac;
+    --c-enerji:#e08a5a;
+    --c-osb:#8b8fd1;
+    --c-bina:#6fa98a;
+    --c-uluslararasi:#c07fb0;
+
+    --r:14px;
+    --maxw:1200px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--amber);color:var(--ink)}
+
+  /* subtle engineering grid backdrop */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    opacity:.20;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,21,36,.82);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar{display:flex;align-items:center;gap:20px;height:66px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .mark{
+    width:38px;height:38px;flex:none;border-radius:9px;
+    background:linear-gradient(150deg,var(--amber),var(--amber-dim));
+    display:grid;place-items:center;color:var(--ink);
+    font-family:"Archivo";font-weight:800;font-size:20px;
+    box-shadow:0 6px 18px -6px rgba(239,176,74,.5);
+  }
+  .brand h1{
+    font-family:"Archivo";font-weight:700;font-size:15px;letter-spacing:.02em;
+    line-height:1.05;white-space:nowrap;
+  }
+  .brand span{display:block;font-family:"IBM Plex Mono";font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+  .bar .stats{margin-left:auto;display:flex;gap:8px}
+  .chip{
+    font-family:"IBM Plex Mono";font-size:11px;color:var(--muted);
+    border:1px solid var(--line);border-radius:99px;padding:6px 11px;
+    display:flex;align-items:center;gap:6px;white-space:nowrap;
+  }
+  .chip b{color:var(--text);font-weight:600}
+  .li-btn{
+    margin-left:6px;display:inline-flex;align-items:center;gap:7px;
+    background:var(--amber);color:var(--ink);font-weight:600;font-size:13px;
+    padding:8px 14px;border-radius:99px;white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .li-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px -8px rgba(239,176,74,.6)}
+  .li-btn svg{width:15px;height:15px}
+
+  /* ---------- ticker ---------- */
+  .ticker{
+    border-bottom:1px solid var(--line);
+    background:var(--ink-2);
+    overflow:hidden;position:relative;
+  }
+  .ticker::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,var(--ink-2),transparent 6%,transparent 94%,var(--ink-2))}
+  .ticker-inner{display:flex;gap:44px;padding:9px 0;white-space:nowrap;width:max-content;
+    animation:scroll 42s linear infinite}
+  .ticker:hover .ticker-inner{animation-play-state:paused}
+  .tick{font-family:"IBM Plex Mono";font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:9px}
+  .tick i{width:5px;height:5px;border-radius:99px;background:var(--amber);font-style:normal}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:54px 0 30px;position:relative}
+  .eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber)}
+  .hero h2{
+    font-family:"Archivo";font-weight:800;letter-spacing:-.02em;line-height:1.04;
+    font-size:clamp(34px,5.4vw,60px);max-width:16ch;
+  }
+  .hero h2 em{font-style:normal;color:var(--amber)}
+  .hero p{margin-top:20px;max-width:56ch;color:var(--muted);font-size:16px}
+
+  /* ---------- controls ---------- */
+  .controls{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .search{
+    flex:1;min-width:240px;display:flex;align-items:center;gap:10px;
+    background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;
+  }
+  .search:focus-within{border-color:var(--amber-dim)}
+  .search svg{width:17px;height:17px;color:var(--muted);flex:none}
+  .search input{background:none;border:0;outline:none;color:var(--text);font-size:14.5px;width:100%;font-family:"Inter"}
+  .search input::placeholder{color:var(--muted-2)}
+
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .filter{
+    font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.02em;
+    border:1px solid var(--line);border-radius:99px;padding:7px 13px;color:var(--muted);
+    cursor:pointer;transition:all .15s ease;background:transparent;
+  }
+  .filter:hover{color:var(--text);border-color:var(--muted-2)}
+  .filter.on{background:var(--amber);color:var(--ink);border-color:var(--amber);font-weight:600}
+
+  .count{font-family:"IBM Plex Mono";font-size:12px;color:var(--muted-2);margin:22px 0 14px}
+
+  /* ---------- feed ---------- */
+  .feed{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+    gap:18px;padding-bottom:70px;
+  }
+  .card{
+    position:relative;background:var(--ink-2);border:1px solid var(--line);
+    border-radius:var(--r);overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:transform .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--spine)}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--spine)}
+  .card-body{padding:20px 20px 16px 22px}
+  .card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+  .cat{font-family:"IBM Plex Mono";font-size:11px;font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--spine);display:flex;align-items:center;gap:7px}
+  .cat .dot{font-size:14px;line-height:1;filter:saturate(1.1)}
+  .sure{font-family:"IBM Plex Mono";font-size:11px;color:var(--muted);
+    border:1px solid var(--line);border-radius:99px;padding:4px 9px;white-space:nowrap}
+  .title{font-family:"Archivo";font-weight:600;font-size:17px;line-height:1.28;letter-spacing:-.01em}
+
+  .meta{margin-top:15px;display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;gap:10px;font-size:13px}
+  .row .k{font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--muted-2);flex:none;width:74px;padding-top:2px}
+  .row .v{color:var(--text)}
+  .row .v.mono{font-family:"IBM Plex Mono";font-size:12.5px;color:var(--amber)}
+
+  .scope{margin-top:6px}
+  .scope ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .scope li{font-size:11.5px;color:var(--muted);background:var(--ink-3);border-radius:6px;padding:3px 8px}
+
+  .card-foot{margin-top:auto;border-top:1px solid var(--line);
+    padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tags{display:flex;flex-wrap:wrap;gap:5px}
+  .tag{font-family:"IBM Plex Mono";font-size:10.5px;color:var(--muted)}
+  .go{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--amber);white-space:nowrap}
+  .go svg{width:13px;height:13px;transition:transform .15s ease}
+  .card:hover .go svg{transform:translate(2px,-2px)}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty b{display:block;font-family:"Archivo";font-size:18px;color:var(--text);margin-bottom:6px}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);background:var(--ink-2);padding:34px 0;position:relative;z-index:1}
+  .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .foot p{font-size:12.5px;color:var(--muted-2);font-family:"IBM Plex Mono"}
+  .foot .lk{font-size:13px;color:var(--muted)}
+  .foot .lk:hover{color:var(--amber)}
+
+  @media (max-width:760px){
+    .bar{height:auto;flex-wrap:wrap;padding:12px 0;gap:12px}
+    .bar .stats{width:100%;margin-left:0;order:3}
+    .li-btn{margin-left:auto}
+    .row .k{width:64px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .ticker-inner{animation:none}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <div class="mark">E</div>
+      <div>
+        <h1>Endüstri Yatırım Gündemi</h1>
+        <span>İhale · Altyapı · Sanayi Yatırımları</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="chip"><b id="stat-count">14.000+</b> takipçi</div>
+      <div class="chip"><b>1.5M</b> aylık görüntülenme</div>
+    </div>
+    <a class="li-btn" href="https://www.linkedin.com/company/endustriyatirim" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+      LinkedIn'de takip et
+    </a>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-inner" id="ticker"></div>
+</div>
+
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Haftalık Bülten · Her Pazartesi 08:00</div>
+    <h2>Türkiye ve dünyadan <em>yatırım ve ihale</em> gündemi, tek yerde.</h2>
+    <p>Kamu ihale bülteninden, kalkınma bankası projelerinden ve büyük sanayi yatırımlarından derlenen güncel duyurular. LinkedIn'de paylaşılan her gönderi burada arşivleniyor.</p>
+
+    <div class="controls">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="İdare, il, İKN veya proje ara…" autocomplete="off" />
+      </label>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="count" id="count"></div>
+  </section>
+
+  <section class="wrap">
+    <div class="feed" id="feed"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p>© 2026 Endüstri Yatırım Gündemi — Bağımsız içerik yayını</p>
+    <a class="lk" href="https://www.linkedin.com/company/endustriyatirim" target="_blank" rel="noopener">linkedin.com/company/endustriyatirim →</a>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   VERİ KAYNAĞI
+   Her gönderi bir nesne. Bu diziyi Python hattın otomatik üretebilir:
+   parse ettiğin ihale bülteninden aynı alanları JSON'a yazdırıp
+   buraya (veya ayrı bir posts.json dosyasına) besle — LinkedIn API'sine
+   hiç gerek kalmadan site kendi kendine güncellenir.
+
+   Alanlar tam olarak senin LinkedIn post şablonunla eşleşiyor:
+   emoji, kategori, il, baslik, ikn, idare, yer, kapsam[], sure,
+   ihaleTarihi, usul, dokuman, hashtags[], linkedinUrl, tarih
+   ===================================================================== */
+const SAMPLE = [
+  {
+    emoji:"🛣️", kategori:"Yol Yapımı", cat:"yol", il:"Antalya / Manavgat",
+    baslik:"Manavgat–Akseki Bağlantı Yolu Yapım İşi",
+    ikn:"2026/812947", idare:"Karayolları 13. Bölge Müdürlüğü",
+    yer:"Antalya / Manavgat", kapsam:["18,4 km bölünmüş yol","Sanat yapıları","Üstyapı ve BSK kaplama"],
+    sure:"540 takvim günü", ihaleTarihi:"02.09.2026 – 10:30",
+    usul:"Açık ihale (e-teklif, EKAP)",
+    dokuman:"https://ekap.kik.gov.tr", tarih:"2026-08-11",
+    hashtags:["#Kamuİhalesi","#YolYapımı","#Karayolları","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  },
+  {
+    emoji:"💧", kategori:"Su & Atıksu", cat:"su", il:"Malatya",
+    baslik:"Malatya İçmesuyu ve Atıksu Şebekesi İyileştirme (EBRD)",
+    ikn:"EBRD-55644", idare:"MASKİ Genel Müdürlüğü",
+    yer:"Malatya (merkez ilçeler)", kapsam:["~140 km isale/şebeke hattı","Terfi merkezleri","SCADA otomasyonu"],
+    sure:"720 takvim günü", ihaleTarihi:"18.09.2026 – 14:00",
+    usul:"Uluslararası açık ihale (EBRD kuralları)",
+    dokuman:"https://www.ebrd.com/procurement", tarih:"2026-08-09",
+    hashtags:["#EBRD","#SuAltyapısı","#Atıksu","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  },
+  {
+    emoji:"⚡", kategori:"Enerji", cat:"enerji", il:"Konya",
+    baslik:"Konya Karapınar 240 MWe GES Saha Yapım İşi",
+    ikn:"2026/799210", idare:"Özel Sektör Yatırımcı (EPC ihalesi)",
+    yer:"Konya / Karapınar", kapsam:["240 MWe panel montajı","OSS ve trafo merkezi","36 kV OG dağıtım"],
+    sure:"420 takvim günü", ihaleTarihi:"25.09.2026 – 11:00",
+    usul:"Davetli EPC ihalesi",
+    dokuman:"https://www.linkedin.com/company/endustriyatirim", tarih:"2026-08-08",
+    hashtags:["#Enerji","#GüneşEnerjisi","#GES","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  },
+  {
+    emoji:"🏭", kategori:"OSB / Sanayi", cat:"osb", il:"Ankara",
+    baslik:"Ankara Uzay ve Havacılık İhtisas OSB Altyapı İnşaatı",
+    ikn:"2026/770118", idare:"HAVELSAN A.Ş.",
+    yer:"Ankara / Kahramankazan", kapsam:["Yol ve altyapı","Yağmursuyu ve atıksu","İçmesuyu ve enerji hatları"],
+    sure:"600 takvim günü", ihaleTarihi:"30.09.2026 – 10:00",
+    usul:"Ön yeterlik + belli istekliler arası",
+    dokuman:"https://ekap.kik.gov.tr", tarih:"2026-08-07",
+    hashtags:["#OSB","#Sanayi","#Altyapı","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  },
+  {
+    emoji:"🏥", kategori:"Bina", cat:"bina", il:"Hatay",
+    baslik:"Hatay Şehir Hastanesi (1.000 Yatak) Yapım İşi",
+    ikn:"2026/770483", idare:"Sağlık Bakanlığı — TC İnşaat Dairesi",
+    yer:"Hatay / Antakya", kapsam:["1.000 yatak ana bina","17.500 kVA jeneratör grubu","Tam tıbbi gaz sistemleri"],
+    sure:"900 takvim günü", ihaleTarihi:"08.10.2026 – 11:30",
+    usul:"Açık ihale (e-teklif, EKAP)",
+    dokuman:"https://ekap.kik.gov.tr", tarih:"2026-08-05",
+    hashtags:["#ŞehirHastanesi","#Sağlık","#Yapımİşi","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  },
+  {
+    emoji:"🌍", kategori:"Uluslararası", cat:"uluslararasi", il:"Azerbaycan",
+    baslik:"Karabağ Sulama Kanalı Rehabilitasyonu (IsDB)",
+    ikn:"IsDB-AZ-2027", idare:"Azərsu ASC",
+    yer:"Azerbaycan / Karabağ bölgesi", kapsam:["Ana kanal rehabilitasyonu","Su alma yapıları","Pompa istasyonları"],
+    sure:"İnşaat ihaleleri 2027 bekleniyor", ihaleTarihi:"İlan öncesi (ön bilgi)",
+    usul:"IsDB finansmanlı uluslararası ihale",
+    dokuman:"https://www.isdb.org", tarih:"2026-08-04",
+    hashtags:["#IsDB","#Sulama","#Azerbaycan","#EndüstriYatırım"],
+    linkedinUrl:"https://www.linkedin.com/company/endustriyatirim"
+  }
+];
+
+// posts.json varsa onu kullanır, yoksa yukarıdaki örnek veriye düşer
+let POSTS = SAMPLE;
+
+const CATS = {
+  all:{label:"Tümü"},
+  yol:{label:"Yol / Ulaştırma"},
+  su:{label:"Su & Atıksu"},
+  enerji:{label:"Enerji"},
+  osb:{label:"OSB / Sanayi"},
+  bina:{label:"Bina"},
+  uluslararasi:{label:"Uluslararası"}
+};
+
+let active = "all";
+let query = "";
+
+/* ---- ticker ---- */
+function buildTicker(){
+  const t = POSTS.map(p => `<span class="tick"><i></i>${p.emoji} ${p.baslik}</span>`).join("");
+  document.getElementById("ticker").innerHTML = t + t; // seamless loop
+}
+buildTicker();
+
+/* ---- filters ---- */
+const filtersEl = document.getElementById("filters");
+filtersEl.innerHTML = Object.entries(CATS).map(([k,v]) =>
+  `<button class="filter ${k==='all'?'on':''}" data-cat="${k}">${v.label}</button>`).join("");
+filtersEl.addEventListener("click", e=>{
+  const b = e.target.closest(".filter"); if(!b) return;
+  active = b.dataset.cat;
+  document.querySelectorAll(".filter").forEach(f=>f.classList.toggle("on", f===b));
+  render();
+});
+
+/* ---- search ---- */
+document.getElementById("q").addEventListener("input", e=>{
+  query = e.target.value.trim().toLowerCase(); render();
+});
+
+/* ---- render ---- */
+const feed = document.getElementById("feed");
+const countEl = document.getElementById("count");
+
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+
+function match(p){
+  if(active!=="all" && p.cat!==active) return false;
+  if(!query) return true;
+  const hay = [p.baslik,p.idare,p.yer,p.ikn,p.kategori,...(p.kapsam||[])].join(" ").toLowerCase();
+  return hay.includes(query);
+}
+
+function card(p){
+  const scope = (p.kapsam||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+  const tags = (p.hashtags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join(" ");
+  return `
+  <article class="card" style="--spine:var(--c-${p.cat})">
+    <div class="card-body">
+      <div class="card-top">
+        <div class="cat"><span class="dot">${p.emoji}</span>${esc(p.kategori)}</div>
+        <div class="sure">⏳ ${esc(p.sure)}</div>
+      </div>
+      <div class="title">${esc(p.baslik)}</div>
+      <div class="meta">
+        <div class="row"><span class="k">İKN</span><span class="v mono">${esc(p.ikn)}</span></div>
+        <div class="row"><span class="k">İdare</span><span class="v">${esc(p.idare)}</span></div>
+        <div class="row"><span class="k">Yer</span><span class="v">${esc(p.yer)}</span></div>
+        <div class="row"><span class="k">Tarih</span><span class="v">${esc(p.ihaleTarihi)}</span></div>
+        <div class="row"><span class="k">Usul</span><span class="v">${esc(p.usul)}</span></div>
+      </div>
+      <div class="scope"><ul>${scope}</ul></div>
+    </div>
+    <div class="card-foot">
+      <div class="tags">${tags}</div>
+      <a class="go" href="${esc(p.linkedinUrl)}" target="_blank" rel="noopener">Gönderi
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </article>`;
+}
+
+function render(){
+  const list = POSTS.filter(match).sort((a,b)=> (b.tarih||"").localeCompare(a.tarih||""));
+  countEl.textContent = `${list.length} duyuru gösteriliyor`;
+  feed.innerHTML = list.length
+    ? list.map(card).join("")
+    : `<div class="empty"><b>Sonuç bulunamadı</b>Arama terimini veya kategoriyi değiştirmeyi dene.</div>`;
+}
+render();
+
+/* ---- posts.json'u yükle (varsa) — hattının ürettiği gerçek veriler ---- */
+fetch("posts.json", {cache:"no-store"})
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(data => {
+    if(Array.isArray(data) && data.length){ POSTS = data; buildTicker(); render(); }
+  })
+  .catch(() => { /* posts.json yoksa örnek veri gösterilir */ });
+</script>
+</body>
+</html>
