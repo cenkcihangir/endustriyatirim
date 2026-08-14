@@ -219,6 +219,51 @@
   footer .copy{border-top:1px solid #24405f;margin-top:8px}
   footer .copy .wrap{padding:16px 22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:#7d90a5;font-family:"IBM Plex Mono"}
 
+  /* ---------- MOBİL (yalnızca telefon; masaüstünü etkilemez) ---------- */
+  @media (max-width:600px){
+    .wrap{padding:0 16px}
+    .topbar .wrap{height:auto;min-height:34px;padding:6px 16px;flex-wrap:wrap;gap:3px 14px}
+    .topbar{font-size:11.5px}
+    .topbar .tlinks{gap:14px}
+
+    .masthead .wrap{flex-wrap:wrap;gap:11px 12px;padding:13px 16px}
+    .logo{gap:10px}
+    .logo .mk{width:42px;height:42px}
+    .logo h1{font-size:18px}
+    .logo span{font-size:9px;letter-spacing:.1em;margin-top:4px}
+    .masthead .search{order:3;margin-left:0;width:100%;min-width:0;padding:9px 12px}
+
+    nav.cats a{padding:11px 12px;font-size:12.5px}
+    .breaking .wrap{padding:0 16px}
+    .breaking .lbl{margin-right:12px;font-size:11px;padding:5px 9px}
+
+    .main{gap:26px;padding:22px 0 46px}
+    .hero{gap:18px;margin-bottom:22px;padding-bottom:20px}
+    .lead h2{font-size:23px}
+    .lead p{font-size:14.5px}
+    .subs{gap:14px}
+    .sec-head h2{font-size:18px}
+    .grid{gap:20px}
+    .card h3{font-size:17.5px}
+
+    .article h1{font-size:25px}
+    .article .spot{font-size:16.5px}
+    .article .amet{flex-wrap:wrap;gap:6px 12px}
+    .article .body p{font-size:16px;line-height:1.7}
+    .detail{padding:16px 16px}
+    .detail .row{grid-template-columns:1fr;gap:3px;padding:9px 0}
+    .detail .row .k{padding-top:0}
+    .src{padding:14px 16px}
+
+    .news-cta{padding:20px 18px}
+    .news-cta .f{flex-direction:column;gap:9px}
+    .news-cta button{width:100%;padding:11px}
+    .box-b{padding:4px 16px 14px}
+
+    footer .wrap{padding:30px 16px 22px;gap:24px}
+    footer .copy .wrap{padding:14px 16px;flex-direction:column;gap:6px}
+  }
+
   @media (prefers-reduced-motion:reduce){.move{animation:none}*{transition:none!important}}
 </style>
 </head>
