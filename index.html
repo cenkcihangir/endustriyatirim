@@ -219,6 +219,21 @@
   footer .copy{border-top:1px solid #24405f;margin-top:8px}
   footer .copy .wrap{padding:16px 22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:#7d90a5;font-family:"IBM Plex Mono"}
 
+  /* ---------- çerez bildirimi ---------- */
+  .cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:200;max-width:780px;margin:0 auto;
+    background:var(--navy);color:#dfe7f0;border-radius:14px;padding:16px 20px;
+    box-shadow:0 14px 44px -12px rgba(0,0,0,.55);
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .cookie[hidden]{display:none}
+  .cookie p{font-size:13px;line-height:1.55;flex:1;min-width:220px;margin:0;color:#cdd8e5}
+  .cookie a{color:#e7c778;text-decoration:underline}
+  .cbtns{display:flex;gap:9px;flex-shrink:0}
+  .cookie button{border:0;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:"Inter"}
+  .ck-ghost{background:transparent;color:#aebfd0;border:1px solid #33506f}
+  .ck-ghost:hover{color:#fff;border-color:#496a8c}
+  .ck-solid{background:var(--amber);color:#fff}
+  .ck-solid:hover{background:var(--amber-deep)}
+
   /* ---------- MOBİL (yalnızca telefon; masaüstünü etkilemez) ---------- */
   @media (max-width:600px){
     .wrap{padding:0 16px}
@@ -262,6 +277,9 @@
 
     footer .wrap{padding:30px 16px 22px;gap:24px}
     footer .copy .wrap{padding:14px 16px;flex-direction:column;gap:6px}
+    .cookie{left:10px;right:10px;bottom:10px;padding:14px 16px;gap:12px}
+    .cbtns{width:100%}
+    .cookie button{flex:1}
   }
 
   @media (prefers-reduced-motion:reduce){.move{animation:none}*{transition:none!important}}
@@ -335,6 +353,14 @@
     </div>
   </div>
 </footer>
+
+<div class="cookie" id="cookie" hidden>
+  <p>Bu sitede, ziyaret istatistiklerini ölçmek ve deneyimi iyileştirmek için çerezler kullanıyoruz. Analitik çerezler yalnızca onayınızla çalışır. KVKK kapsamında tercihinizi belirtebilirsiniz.</p>
+  <div class="cbtns">
+    <button id="ckReject" class="ck-ghost">Reddet</button>
+    <button id="ckAccept" class="ck-solid">Kabul Et</button>
+  </div>
+</div>
 
 <script>
 /* =====================================================================
@@ -854,17 +880,70 @@ function renderArticle(slug){
   window.scrollTo({top:0});
 }
 
+/* ============================================================
+   GOOGLE ANALYTICS 4 (ziyaret ve haber okunma istatistiği)
+   Aşağıya GA4 ölçüm kimliğinizi yazın (G- ile başlar, örn. G-ABCD1234).
+   Kurulum: analytics.google.com → ücretsiz hesap/mülk oluşturun →
+   "Web" veri akışı ekleyin (site adresi: https://www.endustriyatirim.com.tr)
+   → size verilen "Ölçüm Kimliği"ni (G-XXXXXXXX) tırnak içine yapıştırın.
+   Boş bırakılırsa analitik çalışmaz; site normal çalışmaya devam eder.
+   ============================================================ */
+const GA_ID = "G-RNV0C7KBG7"; // GA4 ölçüm kimliği
+
+// Analitik YALNIZCA ziyaretçi çerezleri kabul edince başlar (KVKK uyumlu)
+function loadGA(){
+  if(!GA_ID || window.__gaLoaded) return;
+  window.__gaLoaded=true;
+  const s=document.createElement("script"); s.async=true;
+  s.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID;
+  document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=function(){dataLayer.push(arguments)};
+  gtag("js",new Date());
+  gtag("config",GA_ID,{send_page_view:false});
+  // rıza sonrası mevcut sayfayı da say
+  const h=location.hash.replace(/^#/,"");
+  if(h.startsWith("haber/")){ const p=POSTS.find(x=>slugOf(x)===h.slice(6));
+    trackPage("/haber/"+h.slice(6),(p?p.baslik:"Haber")+" — Endüstri Yatırım Gündemi"); }
+  else { trackPage("/","Anasayfa — Endüstri Yatırım Gündemi"); }
+}
+function trackPage(path,title){
+  if(window.gtag){
+    gtag("event","page_view",{page_title:title,page_path:path,
+      page_location:location.origin+location.pathname+"#"+path.replace(/^\//,"")});
+  }
+}
+
 /* ---- yönlendirme (hash router) ---- */
 function route(){
   const h = location.hash.replace(/^#/,"");
-  if(h.startsWith("haber/")){ renderArticle(h.slice(6)); }
-  else { renderHome(); }
+  if(h.startsWith("haber/")){
+    const sl=h.slice(6); renderArticle(sl);
+    const p=POSTS.find(x=>slugOf(x)===sl);
+    trackPage("/haber/"+sl, (p?p.baslik:"Haber")+" — Endüstri Yatırım Gündemi");
+  } else {
+    renderHome();
+    trackPage("/", "Anasayfa — Endüstri Yatırım Gündemi");
+  }
 }
 window.addEventListener("hashchange", route);
 
 /* ---- başlat ---- */
 function boot(){ buildNav(); buildBreaking(); route(); }
 boot();
+
+/* ---- çerez rızası (KVKK) — analitik yalnızca 'Kabul Et' sonrası başlar ---- */
+(function(){
+  const bar=document.getElementById("cookie");
+  let choice=null;
+  try{ choice=localStorage.getItem("eyg_cookie"); }catch(e){}
+  if(choice==="accept"){ loadGA(); }
+  else if(choice!=="reject"){ if(bar) bar.hidden=false; }
+  const save=(v)=>{ try{ localStorage.setItem("eyg_cookie",v); }catch(e){} };
+  const a=document.getElementById("ckAccept"), r=document.getElementById("ckReject");
+  if(a) a.onclick=()=>{ save("accept"); if(bar) bar.hidden=true; loadGA(); };
+  if(r) r.onclick=()=>{ save("reject"); if(bar) bar.hidden=true; };
+})();
 
 /* ---- posts.json varsa gerçek verilerle güncelle ---- */
 fetch("posts.json",{cache:"no-store"})
