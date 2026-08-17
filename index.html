@@ -882,7 +882,16 @@ function detailBox(p){
 /* ---- HABER SAYFASI ---- */
 function renderArticle(slug){
   const p = POSTS.find(x=>slugOf(x)===slug);
-  if(!p){ location.hash=""; renderHome(); return; }
+  if(!p){
+    // Haber henüz yüklenmemiş olabilir (posts.json geliyor). Linki BOZMA;
+    // tam liste gelince route() tekrar çalışıp bu haberi açacak.
+    if(!window.__postsLoaded){
+      app.innerHTML = `<div class="main"><div><div class="empty"><b>Haber yükleniyor…</b>Lütfen bekleyin.</div></div><aside>${renderSidebar(POSTS)}</aside></div>`;
+    } else {
+      location.hash=""; renderHome();
+    }
+    return;
+  }
   const kapsam = (p.kapsam||[]).map(x=>`<li>${esc(x)}</li>`).join("");
   const govde = (p.govde||[]).map(x=>`<p>${esc(x)}</p>`).join("") || `<p>${esc(p.spot||"")}</p>`;
   const tags = (p.hashtags||[]).map(t=>`<a>${esc(t)}</a>`).join("");
@@ -986,8 +995,8 @@ boot();
 /* ---- posts.json varsa gerçek verilerle güncelle ---- */
 fetch("posts.json",{cache:"no-store"})
   .then(r=>r.ok?r.json():Promise.reject())
-  .then(data=>{ if(Array.isArray(data)&&data.length){ POSTS=data; buildBreaking(); route(); } })
-  .catch(()=>{});
+  .then(data=>{ if(Array.isArray(data)&&data.length){ POSTS=data; buildBreaking(); } window.__postsLoaded=true; route(); })
+  .catch(()=>{ window.__postsLoaded=true; route(); });
 </script>
 </body>
 </html>
