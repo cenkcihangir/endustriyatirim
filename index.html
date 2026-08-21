@@ -460,6 +460,12 @@ function filtered(){
 
 /* ---- ANASAYFA ---- */
 function renderHome(){
+  // Veri henüz posts.json'dan gelmediyse boş liste yerine "Yükleniyor…" göster
+  if(!POSTS.length && !window.__postsLoaded){
+    app.innerHTML = `<div class="main"><div><div class="empty"><b>Yükleniyor…</b>Haberler getiriliyor, lütfen bekleyin.</div></div><aside></aside></div>`;
+    return;
+  }
+
   const list = filtered();
   const sidebar = renderSidebar(list);
 
