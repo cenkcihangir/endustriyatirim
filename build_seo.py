@@ -169,6 +169,10 @@ def article_page(p):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}"/>
 <link rel="canonical" href="{esc(url)}"/>
+<link rel="icon" href="{DOMAIN}/favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="48x48" href="{DOMAIN}/favicon-48x48.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="{DOMAIN}/favicon-192x192.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="{DOMAIN}/apple-touch-icon.png"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="{esc(SITE)}"/>
