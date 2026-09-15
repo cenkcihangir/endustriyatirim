@@ -221,6 +221,7 @@ def article_page(p):
   <span>© {datetime.date.today().year} {esc(SITE)}</span>
   <span><a href="{DOMAIN}/">Ana sayfa</a></span>
 </div></footer>
+<script src="/reklam-popup.js" defer></script>
 </body>
 </html>"""
 

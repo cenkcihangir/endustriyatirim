@@ -723,5 +723,6 @@ fetch("posts.json",{cache:"no-store"})
   .then(data=>{ if(Array.isArray(data)&&data.length){ POSTS=data; buildBreaking(); } window.__postsLoaded=true; route(); })
   .catch(()=>{ window.__postsLoaded=true; route(); });
 </script>
+  <script src="/reklam-popup.js" defer></script>
 </body>
 </html>
