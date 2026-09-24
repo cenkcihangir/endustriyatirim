@@ -460,23 +460,14 @@ $("#q").addEventListener("input", e=>{ query=e.target.value.trim().toLowerCase()
 function filtered(){
   const todayISO = new Date().toISOString().slice(0,10);
   const ihale = activeCat==="ihaleler";
-  const list = POSTS.filter(p=>{
+  return POSTS.filter(p=>{
     if(ihale){
       if(!p.ihale) return false;                        // yalnızca açık ihale haberleri
       if(p.ihaleSon && p.ihaleSon < todayISO) return false; // son teklif tarihi geçmişse gizle
     } else if(activeCat!=="all" && p.cat!==activeCat) return false;
     if(!query) return true;
     return [p.baslik,p.spot,p.idare,p.yer,p.ikn,p.kategori].join(" ").toLowerCase().includes(query);
-  });
-  if(ihale){
-    // yaklaşan son teklif tarihine göre sırala; tarihi olmayanlar sona
-    return list.sort((a,b)=>{
-      const da=a.ihaleSon||"9999-12-31", db=b.ihaleSon||"9999-12-31";
-      if(da!==db) return da.localeCompare(db);
-      return (b.tarih||"").localeCompare(a.tarih||"");
-    });
-  }
-  return list.sort((a,b)=>(b.tarih||"").localeCompare(a.tarih||""));
+  }).sort((a,b)=>(b.tarih||"").localeCompare(a.tarih||""));
 }
 
 /* ---- ANASAYFA ---- */
