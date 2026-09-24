@@ -388,7 +388,8 @@ const CATS = [
   {slug:"osb", label:"OSB / Sanayi", cat:"osb"},
   {slug:"bina", label:"Bina & Sağlık", cat:"bina"},
   {slug:"uluslararasi", label:"Uluslararası", cat:"uluslararasi"},
-  {slug:"sirket", label:"Şirket & Ekonomi", cat:"sirket"}
+  {slug:"sirket", label:"Şirket & Ekonomi", cat:"sirket"},
+  {slug:"ihaleler", label:"İhaleler", cat:"ihaleler"}
 ];
 const EMOJI={yol:"🛣️",su:"💧",enerji:"⚡",osb:"🏭",bina:"🏥",uluslararasi:"🌍",sirket:"🏢"};
 const CATLABEL={yol:"YOL / ULAŞTIRMA",su:"SU & ATIKSU",enerji:"ENERJİ",osb:"OSB / SANAYİ",bina:"BİNA",uluslararasi:"ULUSLARARASI",sirket:"ŞİRKET & EKONOMİ"};
@@ -457,11 +458,25 @@ $("#q").addEventListener("input", e=>{ query=e.target.value.trim().toLowerCase()
 
 /* ---- filtre ---- */
 function filtered(){
-  return POSTS.filter(p=>{
-    if(activeCat!=="all" && p.cat!==activeCat) return false;
+  const todayISO = new Date().toISOString().slice(0,10);
+  const ihale = activeCat==="ihaleler";
+  const list = POSTS.filter(p=>{
+    if(ihale){
+      if(!p.ihale) return false;                        // yalnızca açık ihale haberleri
+      if(p.ihaleSon && p.ihaleSon < todayISO) return false; // son teklif tarihi geçmişse gizle
+    } else if(activeCat!=="all" && p.cat!==activeCat) return false;
     if(!query) return true;
     return [p.baslik,p.spot,p.idare,p.yer,p.ikn,p.kategori].join(" ").toLowerCase().includes(query);
-  }).sort((a,b)=>(b.tarih||"").localeCompare(a.tarih||""));
+  });
+  if(ihale){
+    // yaklaşan son teklif tarihine göre sırala; tarihi olmayanlar sona
+    return list.sort((a,b)=>{
+      const da=a.ihaleSon||"9999-12-31", db=b.ihaleSon||"9999-12-31";
+      if(da!==db) return da.localeCompare(db);
+      return (b.tarih||"").localeCompare(a.tarih||"");
+    });
+  }
+  return list.sort((a,b)=>(b.tarih||"").localeCompare(a.tarih||""));
 }
 
 /* ---- ANASAYFA ---- */
