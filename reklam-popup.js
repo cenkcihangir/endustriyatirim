@@ -5,12 +5,20 @@
      <script src="/reklam-popup.js" defer></script>
    Reklamı değiştirmek: /images/reklam-popup.png dosyasını değiştir (yeni reklam
    gelince aynı ölçüde bir görsel koyman yeterli). Ayarlar aşağıda CFG'de.
+
+   Bir reklamverene özel yayınlamak için CFG içinde:
+     - link:        reklamverenin UTM'li adresi (boşsa mailto ile "reklam alanı")
+     - reklamveren: GA4 raporunda ayırt etmek için kısa etiket (ör. "ekin_paslanmaz")
+   Tıklama oranı GA4'e "reklam_gosterim" ve "reklam_tiklama" olayları olarak düşer;
+   CTR = reklam_tiklama / reklam_gosterim. (Sadece çerez onayı veren ziyaretçiler sayılır.)
    ========================================================================== */
 (function () {
   var CFG = {
     img: "/images/reklam-popup.png",                 // reklam görseli (site kökünden)
     mail: "info@endustriyatirim.com.tr",
     subject: "Reklam Talebi - Endüstri Yatırım Gündemi",
+    link: "",                                         // reklamveren sitesi (UTM'li). Boşsa mailto kullanılır.
+    reklamveren: "bos_alan",                          // GA4 etiketi (ör. "ekin_paslanmaz")
     delay: 800,                                       // açılma gecikmesi (ms)
     once: "session"                                   // "session" | "always" | "daily"
   };
@@ -29,6 +37,15 @@
     try {
       if (CFG.once === "session") sessionStorage.setItem(KEY, "1");
       if (CFG.once === "daily")   localStorage.setItem(KEY, new Date().toDateString());
+    } catch (e) {}
+  }
+
+  // --- GA4 olay gönderimi (gtag yoksa/çerez onayı yoksa sessizce atlar) ---
+  function track(name) {
+    try {
+      if (typeof gtag === "function") {
+        gtag("event", name, { reklam_alani: "popup", reklamveren: CFG.reklamveren });
+      }
     } catch (e) {}
   }
 
@@ -60,6 +77,9 @@
     document.head.appendChild(style);
 
     var mailto = "mailto:" + CFG.mail + "?subject=" + encodeURIComponent(CFG.subject);
+    var href    = CFG.link ? CFG.link : mailto;
+    var extAttr = CFG.link ? ' target="_blank" rel="noopener"' : '';
+    var altTxt  = CFG.link ? 'Reklam' : ('Bu alana reklam verebilirsiniz — ' + CFG.mail);
     var overlay = document.createElement("div");
     overlay.className = "adm-overlay";
     overlay.setAttribute("role", "dialog");
@@ -68,18 +88,22 @@
     overlay.innerHTML =
         '<div class="adm-box">'
       +   '<button class="adm-x" data-adm-close aria-label="Kapat">&times;</button>'
-      +   '<a class="adm-media" href="' + mailto + '">'
-      +     '<img src="' + CFG.img + '" alt="Bu alana reklam verebilirsiniz — ' + CFG.mail + '"/>'
+      +   '<a class="adm-media" href="' + href + '"' + extAttr + '>'
+      +     '<img src="' + CFG.img + '" alt="' + altTxt + '"/>'
       +   '</a>'
       +   '<div class="adm-bar"><span class="adm-note">REKLAM</span>'
       +     '<button class="adm-close" data-adm-close>Kapat</button></div>'
       + '</div>';
     document.body.appendChild(overlay);
 
-    function open()  { overlay.classList.add("open");  document.body.style.overflow = "hidden"; }
+    function open()  { overlay.classList.add("open");  document.body.style.overflow = "hidden"; track("reklam_gosterim"); }
     function close() { overlay.classList.remove("open"); document.body.style.overflow = ""; markSeen(); }
 
     setTimeout(open, CFG.delay);
+
+    // reklam görseline tıklama
+    var media = overlay.querySelector(".adm-media");
+    if (media) media.addEventListener("click", function () { track("reklam_tiklama"); });
 
     overlay.addEventListener("click", function (e) {
       if (e.target === overlay || (e.target.closest && e.target.closest("[data-adm-close]"))) close();
