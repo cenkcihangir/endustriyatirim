@@ -537,7 +537,7 @@ function renderSidebar(list){
       <input id="mail" type="email" placeholder="E-posta adresiniz" />
       <button id="sub">Abone Ol</button>
     </div>
-    <div class="ok" id="okmsg">✓ E-posta uygulamanız açılıyor — göndererek aboneliğinizi tamamlayın.</div>
+    <div class="ok" id="okmsg">✓ Teşekkürler! Abonelik isteğiniz alındı.</div>
   </div>
 
   <div class="box pop">
@@ -555,38 +555,47 @@ function renderSidebar(list){
   </div>`;
 }
 
-/* bülten aboneliği — abonenin e-postasıyla info@endustriyatirim.com.tr'ye mail açar */
 /* ============================================================
-   BÜLTEN ABONELİĞİ
-   Aşağıya Formspree form ID'nizi yazınca (örn. "xldkabcd") abonelik,
-   hiçbir e-posta uygulaması AÇILMADAN doğrudan
+   BÜLTEN ABONELİĞİ  (Web3Forms — statik sitede backend gerektirmez)
+   Ziyaretçi e-postasını yazıp "Abone Ol" deyince, hiçbir e-posta
+   uygulaması AÇILMADAN abonelik isteği doğrudan
    info@endustriyatirim.com.tr adresine düşer.
-   Kurulum: formspree.io'da ücretsiz hesap açın → yeni form oluşturun,
-   hedef e-posta olarak info@endustriyatirim.com.tr girin → size verilen
-   form ID'sini (URL'deki /f/XXXX kısmı) tırnak içine yapıştırın.
-   ID boş bırakılırsa geçici olarak mailto yöntemi çalışır.
+
+   KURULUM (1 dakika, ücretsiz):
+   1) web3forms.com adresine gidin, "Create Access Key" deyin ve
+      hedef e-posta olarak info@endustriyatirim.com.tr girin.
+   2) Mailinize gelen Access Key'i (uuid) aşağıya tırnak içine yapıştırın.
+   Anahtar boş bırakılırsa geçici olarak mailto yöntemi çalışır.
    ============================================================ */
-const FORMSPREE_ID = ""; // <-- Formspree form ID'nizi buraya yazın
+const WEB3FORMS_KEY = "63d73025-c068-4d92-a994-ed92c878153d"; // Web3Forms Access Key (info@endustriyatirim.com.tr)
 
 document.addEventListener("click", async e=>{
   if(!(e.target && e.target.id==="sub")) return;
   const m=$("#mail"), ok=$("#okmsg"), btn=e.target;
   if(!(m && /.+@.+\..+/.test(m.value))){ m && m.focus(); return; }
 
-  if(FORMSPREE_ID){
+  if(WEB3FORMS_KEY){
     btn.disabled=true; btn.textContent="Gönderiliyor…";
     try{
-      const r=await fetch("https://formspree.io/f/"+FORMSPREE_ID,{
+      const r=await fetch("https://api.web3forms.com/submit",{
         method:"POST",
         headers:{"Accept":"application/json","Content-Type":"application/json"},
-        body:JSON.stringify({email:m.value,_subject:"Yeni Bülten Aboneliği"})
+        body:JSON.stringify({
+          access_key:WEB3FORMS_KEY,
+          subject:"Yeni Bülten Aboneliği",
+          from_name:"Endüstri Yatırım Gündemi — Bülten",
+          email:m.value,
+          message:"Yeni bülten abonelik isteği: "+m.value,
+          botcheck:""
+        })
       });
-      if(r.ok){ ok.textContent="✓ Teşekkürler! Aboneliğiniz alındı."; ok.style.display="block"; m.value=""; }
+      const j=await r.json().catch(()=>({}));
+      if(r.ok && j.success!==false){ ok.textContent="✓ Teşekkürler! Aboneliğiniz alındı."; ok.style.display="block"; m.value=""; }
       else { ok.textContent="Bir sorun oluştu, lütfen tekrar deneyin."; ok.style.display="block"; }
     }catch(err){ ok.textContent="Bağlantı hatası, lütfen tekrar deneyin."; ok.style.display="block"; }
     btn.disabled=false; btn.textContent="Abone Ol";
   } else {
-    // geçici yöntem (Formspree ID girilene kadar): e-posta uygulaması açar
+    // geçici yöntem (Access Key girilene kadar): e-posta uygulaması açar
     const konu=encodeURIComponent("Bülten Aboneliği");
     const govde=encodeURIComponent("Merhaba,\n\nHaftalık Endüstri Yatırım Gündemi bültenine abone olmak istiyorum.\n\nAbone e-postası: "+m.value);
     window.location.href="mailto:info@endustriyatirim.com.tr?subject="+konu+"&body="+govde;
