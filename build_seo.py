@@ -61,7 +61,7 @@ def iso_date(iso):
 # ---- statik sayfa şablonu ---------------------------------------------------
 PAGE_CSS = """
 :root{--paper:#faf8f4;--card:#fff;--ink:#14202e;--ink-soft:#3c4a5a;--muted:#75828f;
---line:#e7e2d8;--navy:#0e2038;--amber-deep:#916a1f}
+--line:#e7e2d8;--navy:#0e2038;--navy-2:#16304f;--amber:#b0812a;--amber-deep:#916a1f}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);line-height:1.62;
 font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
@@ -111,8 +111,63 @@ border-radius:10px;padding:13px;margin:26px auto 0;max-width:760px;font-weight:6
 footer{border-top:1px solid var(--line);background:var(--card);margin-top:30px;
 padding:26px 0;color:var(--muted);font-size:12.5px}
 footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-@media(max-width:640px){article{padding:24px 20px}h1{font-size:25px}.spot{font-size:16px}}
+.news-cta{background:linear-gradient(160deg,var(--navy),var(--navy-2));color:#fff;
+padding:24px 26px;border-radius:14px;margin:26px auto 0;max-width:760px}
+.news-cta .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#e7c778}
+.news-cta h3{font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:21px;
+margin:9px 0 6px;line-height:1.2}
+.news-cta p{font-size:13.5px;color:#c3d0de;margin-bottom:14px}
+.news-cta .f{display:flex;gap:8px}
+.news-cta input{flex:1;border:0;border-radius:8px;padding:11px 12px;font-size:13.5px;
+font-family:"Inter",sans-serif;outline:none}
+.news-cta button{background:var(--amber);color:#fff;border:0;border-radius:8px;
+padding:11px 18px;font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.news-cta button:hover{background:var(--amber-deep)}
+.news-cta button:disabled{opacity:.7;cursor:default}
+.news-cta .ok{font-size:13px;color:#8fe0a8;margin-top:10px;display:none}
+@media(max-width:640px){article{padding:24px 20px}h1{font-size:25px}.spot{font-size:16px}
+.news-cta .f{flex-direction:column}}
 """
+
+# ---- haftalık bülten (abone ol) kutusu — ana sayfadaki .news-cta ile birebir ----
+NEWSLETTER_HTML = """  <section class="news-cta" aria-label="Haftalık Bülten">
+    <div class="k">Haftalık Bülten</div>
+    <h3>Her Pazartesi 08:00</h3>
+    <p>Haftanın öne çıkan ihale ve yatırım haberleri e-posta kutunuza gelsin.</p>
+    <div class="f">
+      <input id="mail" type="email" placeholder="E-posta adresiniz" />
+      <button id="sub" type="button">Abone Ol</button>
+    </div>
+    <div class="ok" id="okmsg">✓ Teşekkürler! Abonelik isteğiniz alındı.</div>
+  </section>"""
+
+# Web3Forms — ana sayfadakiyle aynı access key (info@endustriyatirim.com.tr)
+NEWSLETTER_JS = """<script>
+(function(){
+  var KEY="63d73025-c068-4d92-a994-ed92c878153d";
+  var btn=document.getElementById("sub");
+  if(!btn) return;
+  btn.addEventListener("click", async function(){
+    var m=document.getElementById("mail"), ok=document.getElementById("okmsg");
+    if(!(m && /.+@.+\\..+/.test(m.value))){ if(m) m.focus(); return; }
+    btn.disabled=true; btn.textContent="Gönderiliyor…";
+    try{
+      var r=await fetch("https://api.web3forms.com/submit",{
+        method:"POST",
+        headers:{"Accept":"application/json","Content-Type":"application/json"},
+        body:JSON.stringify({access_key:KEY,subject:"Yeni Bülten Aboneliği",
+          from_name:"Endüstri Yatırım Gündemi — Bülten",email:m.value,
+          message:"Yeni bülten abonelik isteği: "+m.value,botcheck:""})
+      });
+      var j=await r.json().catch(function(){return {};});
+      if(r.ok && j.success!==false){ ok.textContent="✓ Teşekkürler! Aboneliğiniz alındı."; ok.style.display="block"; m.value=""; }
+      else { ok.textContent="Bir sorun oluştu, lütfen tekrar deneyin."; ok.style.display="block"; }
+    }catch(err){ ok.textContent="Bağlantı hatası, lütfen tekrar deneyin."; ok.style.display="block"; }
+    btn.disabled=false; btn.textContent="Abone Ol";
+  });
+})();
+</script>"""
 
 def detail_box(p):
     rows=[]
@@ -215,6 +270,7 @@ def article_page(p):
     </div>
   </article>
   <a class="cta" href="{DOMAIN}/#haber/{esc(slug)}">Bu haberi portalda aç →</a>
+{NEWSLETTER_HTML}
 </main>
 
 <footer><div class="wrap">
@@ -222,6 +278,32 @@ def article_page(p):
   <span><a href="{DOMAIN}/">Ana sayfa</a></span>
 </div></footer>
 <script src="/reklam-popup.js" defer></script>
+{NEWSLETTER_JS}
+</body>
+</html>"""
+
+# ---- link'li haber → dış adrese yönlendiren statik stub ---------------------
+def redirect_page(p):
+    """cat'ten bağımsız: p['link'] varsa kendi haber sayfası yerine o adrese
+    yönlendiren küçük bir sayfa üretilir (ör. e-Bülten → /abone.html)."""
+    link  = p["link"]
+    title = f'{p.get("baslik","")} — {SITE}'
+    return f"""<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>{esc(title)}</title>
+<link rel="canonical" href="{esc(link)}"/>
+<meta name="robots" content="noindex,follow"/>
+<meta http-equiv="refresh" content="0; url={esc(link)}"/>
+<script>location.replace({json.dumps(link)});</script>
+<style>body{{font-family:"Inter",system-ui,sans-serif;background:#faf8f4;color:#3c4a5a;
+display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:24px;text-align:center}}
+a{{color:#916a1f;font-weight:600}}</style>
+</head>
+<body>
+<p>Yönlendiriliyorsunuz… <a href="{esc(link)}">Bülten abonelik sayfasına git →</a></p>
 </body>
 </html>"""
 
@@ -230,6 +312,8 @@ def build_sitemap(posts):
     today = datetime.date.today().isoformat()
     urls = [(f"{DOMAIN}/", today, "1.0", "hourly")]
     for p in posts:
+        if p.get("link"):   # dış linke yönlenen haber (stub) sitemap'e girmez
+            continue
         urls.append((f"{DOMAIN}/haber/{slug_of(p)}.html", iso_date(p.get("tarih","")), "0.8", "monthly"))
     body = "".join(
         f"  <url>\n    <loc>{esc(u)}</loc>\n    <lastmod>{lm}</lastmod>\n"
@@ -251,7 +335,7 @@ def main():
     for p in posts:
         slug = slug_of(p)
         with open(os.path.join(OUT_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
-            f.write(article_page(p))
+            f.write(redirect_page(p) if p.get("link") else article_page(p))
     with open("sitemap.xml","w",encoding="utf-8") as f: f.write(build_sitemap(posts))
     with open("robots.txt","w",encoding="utf-8") as f: f.write(build_robots())
     print(f"OK  {len(posts)} haber sayfasi → {OUT_DIR}/")

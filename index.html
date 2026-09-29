@@ -447,7 +447,11 @@ document.addEventListener("click", e=>{
   const cat = e.target.closest("[data-cat]");
   if(cat){ activeCat = cat.dataset.cat; query=""; $("#q").value=""; buildNav(); location.hash=""; renderHome(); window.scrollTo({top:0,behavior:"smooth"}); return; }
   const go = e.target.closest("[data-go]");
-  if(go){ location.hash = "haber/"+go.dataset.go; return; }
+  if(go){
+    const gp = POSTS.find(x=>slugOf(x)===go.dataset.go);
+    if(gp && gp.link){ window.location.href = gp.link; return; }  // dış link (ör. abone.html) — kendi haber sayfası açılmaz
+    location.hash = "haber/"+go.dataset.go; return;
+  }
   const nav = e.target.closest("[data-nav]");
   if(nav){ e.preventDefault();
     if(nav.dataset.nav==="home"){ activeCat="all"; query=""; $("#q").value=""; buildNav(); location.hash=""; renderHome(); }
@@ -628,6 +632,7 @@ function detailBox(p){
 /* ---- HABER SAYFASI ---- */
 function renderArticle(slug){
   const p = POSTS.find(x=>slugOf(x)===slug);
+  if(p && p.link){ location.replace(p.link); return; }  // link'li haber kendi sayfasını açmaz, dış adrese gider
   if(!p){
     // Haber henüz yüklenmemiş olabilir (posts.json geliyor). Linki BOZMA;
     // tam liste gelince route() tekrar çalışıp bu haberi açacak.
