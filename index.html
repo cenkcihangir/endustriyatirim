@@ -464,10 +464,16 @@ function filtered(){
     if(ihale){
       if(!p.ihale) return false;                        // yalnızca açık ihale haberleri
       if(p.ihaleSon && p.ihaleSon < todayISO) return false; // son teklif tarihi geçmişse gizle
-    } else if(activeCat!=="all" && p.cat!==activeCat) return false;
+    } else if(!p.pin && activeCat!=="all" && p.cat!==activeCat) return false; // sabit postlar tüm sekmelerde görünür
     if(!query) return true;
     return [p.baslik,p.spot,p.idare,p.yer,p.ikn,p.kategori].join(" ").toLowerCase().includes(query);
-  }).sort((a,b)=>(b.tarih||"").localeCompare(a.tarih||""));
+  }).sort((a,b)=>{
+    if(!ihale){                                         // sabit postlar en üstte (İhaleler hariç)
+      if(a.pin && !b.pin) return -1;
+      if(b.pin && !a.pin) return 1;
+    }
+    return (b.tarih||"").localeCompare(a.tarih||"");
+  });
 }
 
 /* ---- ANASAYFA ---- */
