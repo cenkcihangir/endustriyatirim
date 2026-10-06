@@ -221,6 +221,7 @@ def article_page(p):
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4865543511794911" crossorigin="anonymous"></script>
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}"/>
 <link rel="canonical" href="{esc(url)}"/>
@@ -275,7 +276,7 @@ def article_page(p):
 
 <footer><div class="wrap">
   <span>© {datetime.date.today().year} {esc(SITE)}</span>
-  <span><a href="{DOMAIN}/">Ana sayfa</a></span>
+  <span><a href="{DOMAIN}/">Ana sayfa</a> · <a href="{DOMAIN}/hakkimizda.html">Hakkımızda</a> · <a href="{DOMAIN}/kvkk.html">KVKK &amp; Gizlilik</a></span>
 </div></footer>
 <script src="/reklam-popup.js" defer></script>
 {NEWSLETTER_JS}
