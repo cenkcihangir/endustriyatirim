@@ -13,6 +13,13 @@
    CTR = reklam_tiklama / reklam_gosterim. (Sadece çerez onayı veren ziyaretçiler sayılır.)
    ========================================================================== */
 (function () {
+  /* ================= İNCELEME MODU =================
+     AdSense inceleme süresince pop-up kapalı tutulur.
+     Pop-up’ı yeniden açmak için: ENABLED = true yap.
+     ================================================= */
+  var ENABLED = false;
+  if (!ENABLED) return;
+
   var CFG = {
     img: "/images/reklam-popup.png",                 // reklam görseli (site kökünden)
     mail: "info@endustriyatirim.com.tr",
