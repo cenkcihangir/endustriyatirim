@@ -2,9 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.endustriyatirim.com.tr/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/kivanc-tekstil-adana-seyhan-depo-prekast-montaj.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/kano-maradi-demiryolu-ebid-100-milyon-dolar-finansman.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/turkish-technic-istanbul-havalimani-lastik-otomasyon.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.endustriyatirim.com.tr/haber/railport-arkas-duisport-kartepe-intermodal-terminal.html</loc>
