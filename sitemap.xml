@@ -2,9 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.endustriyatirim.com.tr/</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/irak-huawei-veri-merkezi-itpc-is-birligi.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/katar-irak-is-konseyi-kalkinma-yolu-250-milyar-dolar.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/irak-2-7-milyar-dolar-ekonomik-tesvik-paketi.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/irak-korfez-turkiye-avrupa-fiber-koridoru-ofn-iq-networks.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/ali-metin-duruk-iskav-tad-laboratuvari-trakya-universitesi.html</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.endustriyatirim.com.tr/haber/sirbistan-novi-sad-atik-yonetimi-danismanlik-ihalesi-ebrd.html</loc>
