@@ -2,9 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.endustriyatirim.com.tr/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/mistacoglu-holding-sekerpinar-50-bin-metrekare-teknoloji-inovasyon-yatirimi.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/cerkezkoy-kapikule-hizli-tren-hatti-acildi-halkali-kapikule.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/hascelik-osmaneli-celikhanesi-cbam-on-dogrulama-2025-emisyon.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/winds-of-change-ruzgar-enerjisi-surdurulebilirlik-finansman-etkinligi-3-kasim.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/esas-group-mustafa-tercan-globalturk-capital-private-capital-briefing.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/inci-holding-ata-fabrikasi-formare-turkiye-manisa-maxion.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.endustriyatirim.com.tr/haber/plasfed-omer-karadeniz-doviz-donusum-destegi-ihracat.html</loc>
