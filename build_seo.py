@@ -216,6 +216,36 @@ def article_page(p):
     }
     ldjson = json.dumps(ld, ensure_ascii=False)
 
+    # ---- GA4 (ziyaret istatistiği) — SPA ile aynı çerez onayı (eyg_cookie) ----
+    _ga_pp = json.dumps(f"/haber/{slug}")
+    _ga_pt = json.dumps(f"{p.get('baslik','')} — {SITE}")
+    ga4_block = (
+        '<script>(function(){'
+        'var GA_ID="G-RNV0C7KBG7";'
+        'var PP=' + _ga_pp + ',PT=' + _ga_pt + ';'
+        'function loadGA(){if(window.__gaLoaded||!GA_ID)return;window.__gaLoaded=true;'
+        'var s=document.createElement("script");s.async=true;'
+        's.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID;document.head.appendChild(s);'
+        'window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};'
+        'gtag("js",new Date());gtag("config",GA_ID,{send_page_view:false});'
+        'gtag("event","page_view",{page_title:PT,page_path:PP,page_location:location.href});}'
+        'function c(){try{return localStorage.getItem("eyg_cookie");}catch(e){return null;}}'
+        'function sv(v){try{localStorage.setItem("eyg_cookie",v);}catch(e){}}'
+        'function bar(){if(document.getElementById("eyg-cookie"))return;'
+        'var d=document.createElement("div");d.id="eyg-cookie";'
+        'd.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:780px;margin:0 auto;background:#0f1b2b;color:#cdd8e5;border:1px solid #27384d;border-radius:12px;padding:14px 16px;font:13px/1.5 Inter,system-ui,Arial,sans-serif;display:flex;flex-wrap:wrap;gap:12px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,.35)";'
+        'var sp=document.createElement("span");sp.style.cssText="flex:1;min-width:200px";'
+        'sp.innerHTML=\'Bu sitede ziyaret istatistiklerini \\u00f6l\\u00e7mek i\\u00e7in \\u00e7erezler kullan\\u0131yoruz. Analitik \\u00e7erezler yaln\\u0131zca onay\\u0131n\\u0131zla \\u00e7al\\u0131\\u015f\\u0131r. <a href="/kvkk.html#cerez" style="color:#e7c778">\\u00c7erez Politikas\\u0131</a>\';'
+        'var ok=document.createElement("button");ok.textContent="Kabul Et";ok.style.cssText="border:0;border-radius:9px;padding:10px 18px;font:600 13px Inter,sans-serif;cursor:pointer;background:#e7c778;color:#1a1200";'
+        'var no=document.createElement("button");no.textContent="Reddet";no.style.cssText="border:1px solid #39506b;border-radius:9px;padding:10px 16px;font:600 13px Inter,sans-serif;cursor:pointer;background:transparent;color:#cdd8e5";'
+        'ok.onclick=function(){sv("accept");d.remove();loadGA();};'
+        'no.onclick=function(){sv("reject");d.remove();};'
+        'd.appendChild(sp);d.appendChild(ok);d.appendChild(no);document.body.appendChild(d);}'
+        'function init(){var v=c();if(v==="accept"){loadGA();}else if(v!=="reject"){bar();}}'
+        'if(document.readyState!=="loading"){init();}else{document.addEventListener("DOMContentLoaded",init);}'
+        '})();</script>'
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -246,6 +276,7 @@ def article_page(p):
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet"/>
 <style>{PAGE_CSS}</style>
 <script type="application/ld+json">{ldjson}</script>
+{ga4_block}
 </head>
 <body>
 <div class="topbar"><div class="wrap"><span class="mono">{esc(fmt_date(p.get('tarih','')))}</span><a href="{DOMAIN}/">endustriyatirim.com.tr</a></div></div>
