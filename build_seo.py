@@ -73,10 +73,11 @@ img{display:block;max-width:100%}
 .topbar{background:var(--navy);color:#c7d2df;font-size:12.5px}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:40px}
 .mast{border-bottom:1px solid var(--line);background:var(--card)}
-.mast .wrap{padding:18px 22px}
-.mast .brand{font-weight:700;font-size:22px;letter-spacing:-.01em}
-.mast .brand .dot{color:var(--amber-deep)}
-.mast .tag{color:var(--muted);font-size:12.5px;margin-top:2px}
+.mast .wrap{padding:16px 22px}
+.mast .logo{display:flex;align-items:center;gap:12px}
+.mast .logo .mk{width:46px;height:46px;flex:none;object-fit:contain}
+.mast .logo .bt{font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:21px;line-height:1;letter-spacing:-.01em;color:var(--navy)}
+.mast .logo span{display:block;font-size:10.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;margin-top:5px}
 article{background:var(--card);border:1px solid var(--line);border-radius:14px;
 margin:26px auto;padding:34px 34px 30px;border-left:5px solid var(--spine,#b0812a)}
 .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
@@ -127,7 +128,9 @@ padding:11px 18px;font-weight:600;font-size:13.5px;cursor:pointer;white-space:no
 .news-cta button:disabled{opacity:.7;cursor:default}
 .news-cta .ok{font-size:13px;color:#8fe0a8;margin-top:10px;display:none}
 @media(max-width:640px){article{padding:24px 20px}h1{font-size:25px}.spot{font-size:16px}
-.news-cta .f{flex-direction:column}}
+.news-cta .f{flex-direction:column}
+.mast .logo .mk{width:40px;height:40px}.mast .logo .bt{font-size:18px}
+.mast .logo span{font-size:9px;letter-spacing:.1em}}
 """
 
 # ---- haftalık bülten (abone ol) kutusu — ana sayfadaki .news-cta ile birebir ----
@@ -281,8 +284,13 @@ def article_page(p):
 <body>
 <div class="topbar"><div class="wrap"><span class="mono">{esc(fmt_date(p.get('tarih','')))}</span><a href="{DOMAIN}/">endustriyatirim.com.tr</a></div></div>
 <header class="mast"><div class="wrap">
-  <a href="{DOMAIN}/"><div class="brand serif">Endüstri Yatırım<span class="dot">.</span></div></a>
-  <div class="tag">İhale ve Yatırım Haberleri</div>
+  <a class="logo" href="{DOMAIN}/">
+    <img class="mk" src="{DOMAIN}/images/logo-mark.png" alt="Endüstri Yatırım Gündemi" width="46" height="46"/>
+    <div>
+      <div class="bt">Endüstri Yatırım Gündemi</div>
+      <span>İhale · Altyapı · Sanayi Yatırımları</span>
+    </div>
+  </a>
 </div></header>
 
 <main class="wrap">

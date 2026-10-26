@@ -40,10 +40,11 @@ img{display:block;max-width:100%}
 .topbar{background:var(--navy);color:#c7d2df;font-size:12.5px}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:40px}
 .mast{border-bottom:1px solid var(--line);background:var(--card)}
-.mast .wrap{padding:18px 22px}
-.mast .brand{font-weight:700;font-size:22px;letter-spacing:-.01em}
-.mast .brand .dot{color:var(--amber-deep)}
-.mast .tag{color:var(--muted);font-size:12.5px;margin-top:2px}
+.mast .wrap{padding:16px 22px}
+.mast .logo{display:flex;align-items:center;gap:12px}
+.mast .logo .mk{width:46px;height:46px;flex:none;object-fit:contain}
+.mast .logo .bt{font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:21px;line-height:1;letter-spacing:-.01em;color:var(--navy)}
+.mast .logo span{display:block;font-size:10.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;margin-top:5px}
 article{background:var(--card);border:1px solid var(--line);border-radius:14px;
 margin:26px auto;padding:34px 34px 30px;border-left:5px solid var(--spine,#b0812a)}
 .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
@@ -94,7 +95,9 @@ padding:11px 18px;font-weight:600;font-size:13.5px;cursor:pointer;white-space:no
 .news-cta button:disabled{opacity:.7;cursor:default}
 .news-cta .ok{font-size:13px;color:#8fe0a8;margin-top:10px;display:none}
 @media(max-width:640px){article{padding:24px 20px}h1{font-size:25px}.spot{font-size:16px}
-.news-cta .f{flex-direction:column}}
+.news-cta .f{flex-direction:column}
+.mast .logo .mk{width:40px;height:40px}.mast .logo .bt{font-size:18px}
+.mast .logo span{font-size:9px;letter-spacing:.1em}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "Alanya'da 1,85 Milyar TL'lik Yeni Resort Otel Projesi: 510 Oda, 1.020 Yatak", "description": "Denisim İnşaat, Alanya Telatiye'de La Perla Del Mare Resort Hotel için nihai ÇED raporu hazırladı. 510 oda ve 1.020 yatak kapasiteli tesisin yatırım bedeli 1,85 milyar TL.", "image": ["https://www.endustriyatirim.com.tr/images/alanya-la-perla-del-mare-resort.jpg"], "datePublished": "2026-08-25T10:45:00", "dateModified": "2026-08-25T10:45:00", "author": {"@type": "Organization", "name": "Endüstri Yatırım Gündemi"}, "publisher": {"@type": "Organization", "name": "Endüstri Yatırım Gündemi", "url": "https://www.endustriyatirim.com.tr"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.endustriyatirim.com.tr/haber/alanya-la-perla-del-mare-resort.html"}, "url": "https://www.endustriyatirim.com.tr/haber/alanya-la-perla-del-mare-resort.html"}</script>
 <script>(function(){var GA_ID="G-RNV0C7KBG7";var PP="/haber/alanya-la-perla-del-mare-resort",PT="Alanya'da 1,85 Milyar TL'lik Yeni Resort Otel Projesi: 510 Oda, 1.020 Yatak \u2014 End\u00fcstri Yat\u0131r\u0131m G\u00fcndemi";function loadGA(){if(window.__gaLoaded||!GA_ID)return;window.__gaLoaded=true;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",GA_ID,{send_page_view:false});gtag("event","page_view",{page_title:PT,page_path:PP,page_location:location.href});}function c(){try{return localStorage.getItem("eyg_cookie");}catch(e){return null;}}function sv(v){try{localStorage.setItem("eyg_cookie",v);}catch(e){}}function bar(){if(document.getElementById("eyg-cookie"))return;var d=document.createElement("div");d.id="eyg-cookie";d.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:780px;margin:0 auto;background:#0f1b2b;color:#cdd8e5;border:1px solid #27384d;border-radius:12px;padding:14px 16px;font:13px/1.5 Inter,system-ui,Arial,sans-serif;display:flex;flex-wrap:wrap;gap:12px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,.35)";var sp=document.createElement("span");sp.style.cssText="flex:1;min-width:200px";sp.innerHTML='Bu sitede ziyaret istatistiklerini \u00f6l\u00e7mek i\u00e7in \u00e7erezler kullan\u0131yoruz. Analitik \u00e7erezler yaln\u0131zca onay\u0131n\u0131zla \u00e7al\u0131\u015f\u0131r. <a href="/kvkk.html#cerez" style="color:#e7c778">\u00c7erez Politikas\u0131</a>';var ok=document.createElement("button");ok.textContent="Kabul Et";ok.style.cssText="border:0;border-radius:9px;padding:10px 18px;font:600 13px Inter,sans-serif;cursor:pointer;background:#e7c778;color:#1a1200";var no=document.createElement("button");no.textContent="Reddet";no.style.cssText="border:1px solid #39506b;border-radius:9px;padding:10px 16px;font:600 13px Inter,sans-serif;cursor:pointer;background:transparent;color:#cdd8e5";ok.onclick=function(){sv("accept");d.remove();loadGA();};no.onclick=function(){sv("reject");d.remove();};d.appendChild(sp);d.appendChild(ok);d.appendChild(no);document.body.appendChild(d);}function init(){var v=c();if(v==="accept"){loadGA();}else if(v!=="reject"){bar();}}if(document.readyState!=="loading"){init();}else{document.addEventListener("DOMContentLoaded",init);}})();</script>
@@ -102,8 +105,13 @@ padding:11px 18px;font-weight:600;font-size:13.5px;cursor:pointer;white-space:no
 <body>
 <div class="topbar"><div class="wrap"><span class="mono">25 Ağustos 2026</span><a href="https://www.endustriyatirim.com.tr/">endustriyatirim.com.tr</a></div></div>
 <header class="mast"><div class="wrap">
-  <a href="https://www.endustriyatirim.com.tr/"><div class="brand serif">Endüstri Yatırım<span class="dot">.</span></div></a>
-  <div class="tag">İhale ve Yatırım Haberleri</div>
+  <a class="logo" href="https://www.endustriyatirim.com.tr/">
+    <img class="mk" src="https://www.endustriyatirim.com.tr/images/logo-mark.png" alt="Endüstri Yatırım Gündemi" width="46" height="46"/>
+    <div>
+      <div class="bt">Endüstri Yatırım Gündemi</div>
+      <span>İhale · Altyapı · Sanayi Yatırımları</span>
+    </div>
+  </a>
 </div></header>
 
 <main class="wrap">
