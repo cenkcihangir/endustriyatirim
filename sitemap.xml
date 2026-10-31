@@ -2,9 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.endustriyatirim.com.tr/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/gimas-malta-10-milyon-euro-ruzgar-turbini-fabrika-yatirimi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/sakarya-askale-icecek-alkolsuz-icecek-yatirimi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/dohler-karaman-dogal-renklendirici-kapasite-yatirimi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/umman-atlas-steel-suhar-entegre-celik-tesisi-yatirimi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/fuchs-cumhuriyetin-ikinci-yuzyilinda-otomotivin-gelecegi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/ak-lease-proparco-50-milyon-euro-kredi-anlasmasi.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/castrol-komatsu-stratejik-isbirligi-madeni-yag.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endustriyatirim.com.tr/haber/karadag-podgoritsa-stadyum-yer-alti-otopark-ihalesi.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.endustriyatirim.com.tr/haber/cimsa-2026-9-aylik-41-8-milyar-tl-net-satis.html</loc>
