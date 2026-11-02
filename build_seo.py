@@ -98,6 +98,10 @@ letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep);margin-bot
 .detail .k{flex:0 0 116px;color:var(--muted);font-weight:600}
 .detail .v{flex:1}
 .detail ul{margin:0;padding-left:18px}
+.degerlendirme{background:#fbf7ef;border:1px solid var(--line);border-left:4px solid var(--amber-deep);border-radius:10px;padding:18px 22px;margin:24px 0}
+.degerlendirme .dt{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:10px}
+.degerlendirme p{margin:0 0 12px;font-size:16px;line-height:1.6;color:var(--ink-soft)}
+.degerlendirme p:last-child{margin-bottom:0}
 .tags{display:flex;flex-wrap:wrap;gap:7px;margin:22px 0 4px}
 .tags a{font-size:12px;color:var(--amber-deep);background:#f3e8cd;
 border-radius:20px;padding:4px 11px}
@@ -171,6 +175,16 @@ NEWSLETTER_JS = """<script>
   });
 })();
 </script>"""
+
+def degerlendirme_box(p):
+    dv = p.get("degerlendirme")
+    if not dv:
+        return ""
+    paras = [dv] if isinstance(dv, str) else list(dv)
+    inner = "".join(f"<p>{esc(x)}</p>" for x in paras if str(x).strip())
+    if not inner:
+        return ""
+    return f'<div class="degerlendirme"><div class="dt">Editör Değerlendirmesi</div>{inner}</div>'
 
 def detail_box(p):
     rows=[]
@@ -303,6 +317,7 @@ def article_page(p):
     <div class="hero"><img src="{esc(img)}" alt="{esc(p.get('baslik',''))}" width="900" height="506"/></div>
     <div class="body">{body}</div>
     {detail_box(p)}
+    {degerlendirme_box(p)}
     <div class="tags">{tags}</div>
     <div class="src">
       <span>Kaynak: {esc(p.get('kaynak','—'))}</span>
