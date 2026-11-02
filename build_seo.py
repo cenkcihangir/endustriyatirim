@@ -102,6 +102,7 @@ letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep);margin-bot
 .degerlendirme .dt{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:10px}
 .degerlendirme p{margin:0 0 12px;font-size:16px;line-height:1.6;color:var(--ink-soft)}
 .degerlendirme p:last-child{margin-bottom:0}
+.body h3.sec{font-family:"Source Serif 4",Georgia,serif;font-size:21px;font-weight:700;color:var(--navy);margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line);letter-spacing:-.01em}
 .tags{display:flex;flex-wrap:wrap;gap:7px;margin:22px 0 4px}
 .tags a{font-size:12px;color:var(--amber-deep);background:#f3e8cd;
 border-radius:20px;padding:4px 11px}
@@ -213,7 +214,10 @@ def article_page(p):
     title = f'{p.get("baslik","")} — {SITE}'
     desc  = p.get("spot","") or (p.get("govde",[""])[0] if p.get("govde") else "")
     desc  = re.sub(r"\s+"," ",desc).strip()[:300]
-    body  = "".join(f"<p>{esc(x)}</p>" for x in p.get("govde",[])) or f"<p>{esc(p.get('spot',''))}</p>"
+    def _ln(x):
+        x=str(x)
+        return f'<h3 class="sec">{esc(x[3:])}</h3>' if x.startswith("## ") else f"<p>{esc(x)}</p>"
+    body  = "".join(_ln(x) for x in p.get("govde",[])) or f"<p>{esc(p.get('spot',''))}</p>"
     tags  = "".join(f"<a>{esc(t)}</a>" for t in p.get("hashtags",[]))
     hue   = CATHUE.get(cat,"#b0812a")
     catlbl= f'{EMOJI.get(cat,"📌")} {esc(p.get("kategori", CATLABEL.get(cat,"")))}'
