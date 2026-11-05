@@ -32,6 +32,20 @@ TR_MONTHS = ["","Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz",
 def esc(s):
     return html.escape(str(s if s is not None else ""), quote=True)
 
+URL_RE = re.compile(r'https?://[^\s<>()]+[^\s<>().,;:!?\'"]')
+def linkify(s):
+    """Metni güvenli şekilde kaçırır; içindeki http(s) linklerini tıklanabilir <a> yapar."""
+    s = str(s if s is not None else "")
+    out = []; last = 0
+    for m in URL_RE.finditer(s):
+        out.append(esc(s[last:m.start()]))
+        u = m.group(0)
+        out.append(f'<a href="{esc(u)}" target="_blank" rel="noopener" '
+                   f'style="color:var(--amber-deep);word-break:break-word">{esc(u)}</a>')
+        last = m.end()
+    out.append(esc(s[last:]))
+    return "".join(out)
+
 def slug_of(p):
     if p.get("slug"): return p["slug"]
     b = p.get("baslik","").lower()
@@ -216,7 +230,7 @@ def article_page(p):
     desc  = re.sub(r"\s+"," ",desc).strip()[:300]
     def _ln(x):
         x=str(x)
-        return f'<h3 class="sec">{esc(x[3:])}</h3>' if x.startswith("## ") else f"<p>{esc(x)}</p>"
+        return f'<h3 class="sec">{esc(x[3:])}</h3>' if x.startswith("## ") else f"<p>{linkify(x)}</p>"
     body  = "".join(_ln(x) for x in p.get("govde",[])) or f"<p>{esc(p.get('spot',''))}</p>"
     tags  = "".join(f"<a>{esc(t)}</a>" for t in p.get("hashtags",[]))
     hue   = CATHUE.get(cat,"#b0812a")
@@ -324,7 +338,7 @@ def article_page(p):
     {degerlendirme_box(p)}
     <div class="tags">{tags}</div>
     <div class="src">
-      <span>Kaynak: {esc(p.get('kaynak','—'))}</span>
+      <span>Kaynak: {linkify(p.get('kaynak','—'))}</span>
       <a class="li" href="{esc(p.get('linkedinUrl','https://www.linkedin.com/company/endustriyatirim'))}" target="_blank" rel="noopener">{LI_SVG} LinkedIn'de görüntüle</a>
     </div>
   </article>
