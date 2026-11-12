@@ -524,7 +524,7 @@ function renderHome(){
   </section>`;
 
   if(rest.length){
-    content += `<div class="sec-head"><h2>${activeCat==="all"?"Son İhale Haberleri":CATS.find(c=>c.cat===activeCat).label}</h2><div class="ln"></div><div class="cnt">${list.length} haber</div></div>`;
+    if(activeCat!=="all") content += `<div class="sec-head"><h2>${CATS.find(c=>c.cat===activeCat).label}</h2><div class="ln"></div><div class="cnt">${list.length} haber</div></div>`;
     content += `<div class="grid">${rest.map(card).join("")}</div>`;
   }
 
