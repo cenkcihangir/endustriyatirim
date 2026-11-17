@@ -64,9 +64,28 @@
     .btns{justify-content:center;}
     .reader iframe{height:70vh;}
   }
+  .pagetop{background:var(--navy2);}
+  .pagetop .wrap{display:flex;justify-content:flex-end;padding:9px 16px;}
+  .tnav{display:flex;flex-wrap:wrap;gap:20px;}
+  .tnav a{color:#c9d5de;font-size:12.5px;text-decoration:none;letter-spacing:.02em;}
+  .tnav a:hover{color:var(--brass2);}
+  @media (max-width:560px){.pagetop .wrap{justify-content:center;}.tnav{gap:14px;}}
 </style>
 </head>
 <body>
+
+<div class="pagetop">
+  <div class="wrap">
+    <nav class="tnav">
+      <a href="https://www.endustriyatirim.com.tr/#">Anasayfa</a>
+      <a href="https://www.linkedin.com/company/endustriyatirim" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.endustriyatirim.com.tr/#">Bülten</a>
+      <a href="mailto:info@endustriyatirim.com.tr">İletişim</a>
+      <a href="https://www.endustriyatirim.com.tr/hakkimizda.html">Hakkımızda</a>
+      <a href="https://www.endustriyatirim.com.tr/kvkk.html">KVKK</a>
+    </nav>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">
