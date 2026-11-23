@@ -103,6 +103,9 @@
   @media (max-width:940px){.main{grid-template-columns:1fr}}
 
   .kicker{font-family:"IBM Plex Mono";font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .ozel{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 8px}
+  .ozel .ozel-b{background:#b4231a;color:#fff;font-family:"IBM Plex Mono";font-size:10.5px;font-weight:700;letter-spacing:.09em;padding:3px 8px;border-radius:4px}
+  .ozel .ozel-t{font-family:"IBM Plex Mono";font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#b4231a}
 
   /* ---------- hero ---------- */
   .hero{display:grid;grid-template-columns:1.55fr 1fr;gap:24px;margin-bottom:36px;
@@ -511,6 +514,7 @@ function renderHome(){
     <div class="lead" data-go="${slugOf(lead)}" style="--spine:var(--c-${lead.cat})">
       ${cover(lead,760,428)}
       <div class="cat kicker">${EMOJI[lead.cat]} ${esc(lead.kategori)}</div>
+      ${ozelBadge(lead)}
       <h2>${esc(lead.baslik)}</h2>
       <p>${esc(lead.spot)}</p>
       <div class="meta">${fmtDate(lead.tarih)} · ${esc(lead.kaynak||"")}</div>
@@ -531,10 +535,12 @@ function renderHome(){
   app.innerHTML = `<div class="main"><div>${content}</div><aside>${sidebar}</aside></div>`;
 }
 
+function ozelBadge(p){return p.ozel?`<div class="ozel"><span class="ozel-b">ÖZEL HABER</span><span class="ozel-t">Endüstri Yatırım Gündemi Özel Haberi</span></div>`:"";}
 function card(p){
   return `<article class="card" data-go="${slugOf(p)}" style="--spine:var(--c-${p.cat})">
     ${cover(p,520,325)}
     <div class="cat kicker">${EMOJI[p.cat]} ${esc(p.kategori)}</div>
+    ${ozelBadge(p)}
     <h3>${esc(p.baslik)}</h3>
     <p>${esc(p.spot)}</p>
     <div class="meta"><span>${fmtDate(p.tarih)}</span><span>${esc(p.kaynak||"")}</span></div>
@@ -657,6 +663,7 @@ function renderArticle(slug){
     <article class="article" style="--spine:var(--c-${p.cat})">
       <span class="back" data-nav="home">← Tüm Haberler</span>
       <div class="cat kicker" style="color:var(--c-${p.cat})">${EMOJI[p.cat]} ${esc(p.kategori)}</div>
+      ${ozelBadge(p)}
       <h1>${esc(p.baslik)}</h1>
       <p class="spot">${esc(p.spot)}</p>
       <div class="amet"><span>${fmtDate(p.tarih)}</span><span>·</span><span>${esc(p.kaynak||"")}</span></div>

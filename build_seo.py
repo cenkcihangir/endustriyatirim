@@ -96,6 +96,9 @@ article{background:var(--card);border:1px solid var(--line);border-radius:14px;
 margin:26px auto;padding:34px 34px 30px;border-left:5px solid var(--spine,#b0812a)}
 .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
 letter-spacing:.06em;text-transform:uppercase}
+.ozel{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 2px}
+.ozel .ozel-b{background:#b4231a;color:#fff;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.09em;padding:4px 9px;border-radius:4px}
+.ozel .ozel-t{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#b4231a}
 h1{font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:31px;
 line-height:1.22;margin:12px 0 14px;letter-spacing:-.01em}
 .spot{font-size:18px;color:var(--ink-soft);font-weight:500;margin-bottom:16px}
@@ -235,6 +238,7 @@ def article_page(p):
     tags  = "".join(f"<a>{esc(t)}</a>" for t in p.get("hashtags",[]))
     hue   = CATHUE.get(cat,"#b0812a")
     catlbl= f'{EMOJI.get(cat,"📌")} {esc(p.get("kategori", CATLABEL.get(cat,"")))}'
+    ozel_html = '<div class="ozel"><span class="ozel-b">ÖZEL HABER</span><span class="ozel-t">Endüstri Yatırım Gündemi Özel Haberi</span></div>' if p.get("ozel") else ""
 
     ld = {
         "@context":"https://schema.org","@type":"NewsArticle",
@@ -329,6 +333,7 @@ def article_page(p):
   <article style="--spine:{hue}">
     <a class="back" href="{DOMAIN}/">← Tüm Haberler</a>
     <div class="kicker" style="color:{hue};margin-top:14px">{catlbl}</div>
+    {ozel_html}
     <h1>{esc(p.get('baslik',''))}</h1>
     <p class="spot">{esc(p.get('spot',''))}</p>
     <div class="amet"><span>{esc(fmt_date(p.get('tarih','')))}</span><span>·</span><span>{esc(p.get('kaynak',''))}</span></div>
