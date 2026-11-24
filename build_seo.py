@@ -386,9 +386,16 @@ a{{color:#916a1f;font-weight:600}}</style>
 </html>"""
 
 # ---- sitemap + robots -------------------------------------------------------
+# Elle hazırlanan (build_seo.py'nin üretmediği) statik sayfalar — sitemap'te kalıcı yer alır
+STATIC_PAGES = [
+    ("/reklam.html", "0.6", "monthly"),
+]
+
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
     urls = [(f"{DOMAIN}/", today, "1.0", "hourly")]
+    for path, pr, cf in STATIC_PAGES:
+        urls.append((f"{DOMAIN}{path}", today, pr, cf))
     for p in posts:
         if p.get("link"):   # dış linke yönlenen haber (stub) sitemap'e girmez
             continue
